@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>motsClass</class>
+ <widget class="QWidget" name="motsClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1000</width>
+    <height>1000</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Monkey of the Sea</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout_5">
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="tabData">
+      <attribute name="title">
+       <string>数据</string>
+      </attribute>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout">
+         <item>
+          <widget class="QLabel" name="labelData1Title">
+           <property name="text">
+            <string>队友</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QListWidget" name="listWidgetData1"/>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <item>
+          <widget class="QLabel" name="labelData2Title">
+           <property name="text">
+            <string>对手</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QListWidget" name="listWidgetData2"/>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tabConfig">
+      <attribute name="title">
+       <string>设定</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <item>
+          <widget class="QLabel" name="labelGamePathHint">
+           <property name="text">
+            <string>游戏路径</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEditGamePath"/>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QLabel" name="labelServerUrlHint">
+           <property name="text">
+            <string>搜索服务器地址</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <item>
+            <widget class="QLineEdit" name="lineEditGetIdUrl"/>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="lineEditGetShipNameUrl"/>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="lineEditGetOverviewUrl"/>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="lineEditGetShipUrl"/>
+           </item>
+           <item>
+            <widget class="QLabel" name="labelServerUrlHint2">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>除非您充分了解您在做什么，否则请不要更改此项。
+如需更改（例如官方服务器地址变更时），请注意保留地址中的占位符。
+更改前，请务必自行确认网站根目录下 robots.txt 中允许该项的调取。</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <item>
+          <widget class="QLabel" name="labelLocalIntervalHint">
+           <property name="text">
+            <string>本地文件侦听间隔（毫秒）</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEditLocalInterval">
+           <property name="inputMethodHints">
+            <set>Qt::ImhDigitsOnly</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeType">
+            <enum>QSizePolicy::Preferred</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QLabel" name="labelNetworkIntervalHint">
+           <property name="text">
+            <string>联网数据更新间隔（毫秒）</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEditNetworkInterval">
+           <property name="inputMethodHints">
+            <set>Qt::ImhDigitsOnly</set>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_7">
+         <item>
+          <widget class="QLabel" name="labelApplicationIdHint">
+           <property name="text">
+            <string>Wargaming公共API应用ID</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="lineEditApplicationId">
+           <property name="placeholderText">
+            <string>缺省为默认值。除非您充分了解您在做什么，否则请不要填写此项。</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <item>
+          <widget class="QPushButton" name="pushButtonResetConfig">
+           <property name="text">
+            <string>重置设定</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButtonCancelChange">
+           <property name="text">
+            <string>取消修改</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButtonConfirmConfig">
+           <property name="text">
+            <string>应用设定</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tabLog">
+      <attribute name="title">
+       <string>日志</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_6">
+       <item>
+        <widget class="QListWidget" name="listWidgetLog"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tabHelp">
+      <attribute name="title">
+       <string>帮助</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_7">
+       <item>
+        <widget class="QLabel" name="labelHelp1">
+         <property name="text">
+          <string>帮助
+
+ - 阅读数据：
+
+   - 第一行：玩家名  [舰船名]  AvgTier: 玩家使用舰船的平均等级
+   - 第二行 总览（Overview）：总场数  胜率  平均经验（不计加成）  平均伤害
+   - 第三行 当前船只（Current Ship）：总场数  胜率  平均经验（不计加成）  平均伤害
+
+- 可能的报错提示：
+
+   - 找不到游戏目录，请在设定中调整游戏路径，或停用文件读取保护工具。
+   - 未能搜索到玩家，这通常由玩家更改昵称、昵称违规而被屏蔽，新注册的玩家昵称，或玩家隐藏战绩引起。
+   - 未能搜索到船只，这通常由 Wargaming Public API 的数据滞后引起。
+     该 API 更新频率较低并经常过时，但我尚未找到一个其他方式，来通过 shipId 查询舰船名称。
+   - Robot 许可取得失败，这可能由网络状态不佳引起，或是 360 停止了对 wowsgame.cn/community/ 下内容的获取许可。
+   - 其他网络错误提示：请根据日志内容自行判断问题。
+
+- 法律相关问题说明：
+
+   - Mots 项目使用 WTFPL（经过更改）协议开源，允许一切行为，但额外声明了我不对此项目中的代码、程序等内容负责。
+   - Mots 项目仅供学习交流使用，我将永远不会凭借它盈利，即便我不禁止任何人这样做。
+   - 在使用程序之前，请您明确该程序可能带来的法律风险：按照 360 游戏客服的说法，战舰世界 360 服务器并不存在公开 API 可供使用。
+   - 一切您在修改、重新分发、使用本项目中代码或二进制文件时引发的问题与法律风险均与我无关，请您自行负责。
+
+
+Mots - Esun's release. Contact me at: esun_zhao@hotmail.com.</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_6">
+     <item>
+      <widget class="QLabel" name="labelLogHint">
+       <property name="text">
+        <string>上一条日志：</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="labelLog">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <resources>
+  <include location="mots.qrc"/>
+ </resources>
+ <connections/>
+</ui>

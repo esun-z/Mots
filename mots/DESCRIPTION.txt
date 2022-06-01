@@ -1,0 +1,3 @@
+This program's legitimacy is based on https://wowsgame.cn/robots.txt, which allows robots to catch the information in https://wowsgame.cn/community/.
+
+However, if there is any problem, please contact me at esun_zhao@hotmail.com first and I will give a response as soon as I can.
