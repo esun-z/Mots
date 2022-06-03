@@ -88,19 +88,23 @@
     <ClCompile Include="ConfigManager.cpp" />
     <ClCompile Include="global.cpp" />
     <ClCompile Include="NetworkManager.cpp" />
+    <ClCompile Include="PrUtility.cpp" />
+    <ClCompile Include="ReplyReader.cpp" />
     <ClCompile Include="RobotCheck.cpp" />
     <QtRcc Include="mots.qrc" />
     <QtUic Include="mots.ui" />
     <QtMoc Include="mots.h" />
-    <ClCompile Include="AreanListener.cpp" />
+    <ClCompile Include="ArenaListener.cpp" />
     <ClCompile Include="mots.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="PrUtility.h" />
+    <ClInclude Include="ReplyReader.h" />
     <ClInclude Include="resource.h" />
     <QtMoc Include="RobotCheck.h" />
     <QtMoc Include="NetworkManager.h" />
-    <QtMoc Include="AreanListener.h" />
+    <QtMoc Include="ArenaListener.h" />
     <QtMoc Include="ConfigManager.h" />
     <ClInclude Include="global.h" />
   </ItemGroup>

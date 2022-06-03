@@ -13,7 +13,7 @@ public:
 	QString lastError;
 
 private:
-	QNetworkAccessManager* nm = nullptr;
+	QNetworkAccessManager* nmId = nullptr;
 	QNetworkRequest req;
 	QNetworkReply* rep = nullptr;
 

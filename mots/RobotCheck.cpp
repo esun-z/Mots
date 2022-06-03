@@ -7,8 +7,8 @@ RobotCheck::RobotCheck(QString url, QObject *parent)
 		url += "/";
 	}
 	req.setUrl(url + "robots.txt");
-	nm = new QNetworkAccessManager(this);
-	rep = nm->get(req);
+	nmId = new QNetworkAccessManager(this);
+	rep = nmId->get(req);
 	connect(rep, SIGNAL(finished()), this, SLOT(HandleReply()));
 }
 
@@ -40,7 +40,7 @@ void RobotCheck::HandleReply() {
 			req = QNetworkRequest();
 			req.setUrl(QUrl(redirectedUrl));
 			
-			rep = nm->get(req);
+			rep = nmId->get(req);
 			connect(rep, SIGNAL(finished()), this, SLOT(HandleReply()));
 			qDebug() << "Redirect to: " + redirectedUrl.toString();
 		}

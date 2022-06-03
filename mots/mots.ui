@@ -235,32 +235,7 @@
        <item>
         <widget class="QLabel" name="labelHelp1">
          <property name="text">
-          <string>帮助
-
- - 阅读数据：
-
-   - 第一行：玩家名  [舰船名]  AvgTier: 玩家使用舰船的平均等级
-   - 第二行 总览（Overview）：总场数  胜率  平均经验（不计加成）  平均伤害
-   - 第三行 当前船只（Current Ship）：总场数  胜率  平均经验（不计加成）  平均伤害
-
-- 可能的报错提示：
-
-   - 找不到游戏目录，请在设定中调整游戏路径，或停用文件读取保护工具。
-   - 未能搜索到玩家，这通常由玩家更改昵称、昵称违规而被屏蔽，新注册的玩家昵称，或玩家隐藏战绩引起。
-   - 未能搜索到船只，这通常由 Wargaming Public API 的数据滞后引起。
-     该 API 更新频率较低并经常过时，但我尚未找到一个其他方式，来通过 shipId 查询舰船名称。
-   - Robot 许可取得失败，这可能由网络状态不佳引起，或是 360 停止了对 wowsgame.cn/community/ 下内容的获取许可。
-   - 其他网络错误提示：请根据日志内容自行判断问题。
-
-- 法律相关问题说明：
-
-   - Mots 项目使用 WTFPL（经过更改）协议开源，允许一切行为，但额外声明了我不对此项目中的代码、程序等内容负责。
-   - Mots 项目仅供学习交流使用，我将永远不会凭借它盈利，即便我不禁止任何人这样做。
-   - 在使用程序之前，请您明确该程序可能带来的法律风险：按照 360 游戏客服的说法，战舰世界 360 服务器并不存在公开 API 可供使用。
-   - 一切您在修改、重新分发、使用本项目中代码或二进制文件时引发的问题与法律风险均与我无关，请您自行负责。
-
-
-Mots - Esun's release. Contact me at: esun_zhao@hotmail.com.</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:16pt;&quot;&gt;帮助&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;阅读数据&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;   - 第一行：玩家名  [舰船名]  AvgTier: 玩家使用舰船的平均等级 PR: 当前船只 Personal Rate 值&lt;/p&gt;&lt;p&gt;   - 第二行 玩家总览：总场数  胜率  场均经验（不计加成）  场均伤害  场均击沉&lt;/p&gt;&lt;p&gt;   - 第三行 当前船只：总场数  胜率  场均经验（不计加成）  场均伤害  场均击沉&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;可能的错误报告&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;   - 找不到游戏目录，请在设定中调整游戏路径，或停用文件读取保护工具。&lt;/p&gt;&lt;p&gt;   - 未能搜索到玩家，这通常由玩家更改昵称，昵称违规而被屏蔽（昵称中包含井号&amp;quot;#&amp;quot;），新注册的玩家昵称，或玩家隐藏战绩引起。&lt;/p&gt;&lt;p&gt;   - 未能获取 PR 平均值列表，这可能由于错误地删除本地平均值文件（prList.json），或平均值服务器（来自&lt;a href=&quot;https://shinoaki.com/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;西行寺雨季&lt;/span&gt;&lt;/a&gt;）发生了变更。&lt;/p&gt;&lt;p&gt;   - Robot 许可取得失败，这可能由网络状态不佳引起，或是 360 停止了对 &lt;a href=&quot;https://wowsgame.cn/community/&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;其网站 Community&lt;/span&gt;&lt;/a&gt; 下内容的获取许可。&lt;/p&gt;&lt;p&gt;   - 其他网络错误提示：请根据日志内容自行判断问题。&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:12pt;&quot;&gt;法律问题说明&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;   - Mots 项目使用 WTFPL 协议开源，允许一切行为，但额外声明了我不对此项目中的代码、程序等内容负责。&lt;/p&gt;&lt;p&gt;   - Mots 项目仅供学习交流使用，我不会凭借它盈利，即便我不禁止任何人这样做。&lt;/p&gt;&lt;p&gt;   - 在使用程序之前，请您明确该程序可能带来的法律风险。&lt;/p&gt;&lt;p&gt;   - 一切您在修改、重新分发、使用本项目中代码或二进制文件时引发的问题与法律风险均与我无关。&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;Mots - Esun's release. Contact me at: esun_zhao@hotmail.com.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
         </widget>
        </item>

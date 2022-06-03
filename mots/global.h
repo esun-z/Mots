@@ -12,23 +12,34 @@
 #include <QNetworkRequest>
 #include <QNetworkReply>
 #include <QObject>
+#include <QJsonDocument>
+#include <QJsonArray>
+#include <QJsonObject>
+#include <QJsonValue>
+#include <QRegularExpression>
+#include <QColor>
+#include <iostream>
+#include <map>
+#include <algorithm>
 
 #define MAXPLAYERCOUNT 100
-#define MAXVERSIONCOUNT 10
+//#define MAXVERSIONCOUNT 10
+#define MAXSHIPCOUNT 1000
 #define PLACEHOLDER_PLAYERNAME "{playerName}"
 #define PLACEHOLDER_PLAYERID "{playerId}"
 #define PLACEHOLDER_SHIPID "{shipId}"
 #define PLACEHOLDER_SHIPNAME "{shipName}"
 #define PLACEHOLDER_APPLICATIONID "{WGApplicationId}"
-#define APPLICATIONID "b9bcc3fe33f38c063d31c721f6433f83"
+#define APPLICATIONID "somethingStupid"
 
 #define ROBOTCHECKURL "https://wowsgame.cn/"
+#define PRLISTURL "http://proxy.wows.shinoaki.com:7152/public/ship/pr/list"
 
-#define SEARCHPROCESS_NOTREADY 0
-#define SEARCHPROCESS_READY 1
-#define SEARCHPROCESS_IDGET 2
-#define SEARCHPROCESS_OVERVIEWGET 3
+#define SEARCHPROCESS_WAITING 0
+#define SEARCHPROCESS_IDGET 1
+#define SEARCHPROCESS_OVERVIEWGET 2
 #define SEARCHPROCESS_SHIPGET 4
+#define SEARCHPROCESS_READY 8
 
 #define RELATION_SELF 0
 #define RELATION_ALLY 1
@@ -41,12 +52,16 @@ struct PlayerScore {
 	int winningCount;
 	int averageExp;
 	int averageDamage;
+	double frag;
+	int pr;
 
 	PlayerScore() {
 		battleCount = 0;
 		winningCount = 0;
 		averageExp = 0;
 		averageDamage = 0;
+		frag = 0;
+		pr = 0;
 	}
 };
 
@@ -54,12 +69,13 @@ struct PlayerData {
 	long long id;
 	long long shipId;
 	QString name;
-	QString shipName;/*Not available for now because of lack of database.*/
+	QString shipName;
 	int relation;
 	//bool ready;
 	bool basicReady;
 	//bool shipNameReady;
 	bool networkInfoReady;
+	bool networkError;
 	int searchProcess;
 	PlayerScore overviewScore;
 	PlayerScore onShipScore;
@@ -73,20 +89,21 @@ struct PlayerData {
 		basicReady = false;
 		networkInfoReady = false;
 		//shipNameReady = false;
-		searchProcess = SEARCHPROCESS_NOTREADY;
+		searchProcess = SEARCHPROCESS_WAITING;
 		overviewScore = PlayerScore();
 		onShipScore = PlayerScore();
 		averageTier = 0;
+		networkError = false;
 	}
 };
 
-struct AreanInfo {
+struct ArenaInfo {
 	PlayerData player[MAXPLAYERCOUNT];
 	int playerCount;
 	QString selfPlayerName;
 	QString selfShipName;
 
-	AreanInfo() {
+	ArenaInfo() {
 		playerCount = 0;
 		for (int i = 0; i < MAXPLAYERCOUNT; i++) {
 			player[i] = PlayerData();
@@ -116,8 +133,20 @@ struct MotsConfig {
 		applicationId = APPLICATIONID;
 		customApplicationId = false;
 	}
+
+	int getNetworkInterval() {
+		if (networkInterval <= 0) {
+			networkInterval = 1;
+		}
+		return networkInterval;
+	}
+
+	int getLocalInterval() {
+		if (localInterval <= 0) {
+			localInterval = 1;
+		}
+		return localInterval;
+	}
 };
 
 QString ConvertUnicodeString(QString ustr);
-QString GetString(QString line, QString key);
-long long GetValue(QString line, QString key);

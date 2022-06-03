@@ -29,10 +29,10 @@ void mots::CheckBot() {
 
 void mots::HandleRobotCheckAllow() {
     SendLog("Robot permission confirmed.");
-    areanListener = new AreanListener(&config, this);
+    arenaListener = new ArenaListener(&config, this);
     InitConnection();
-    areanListener->Init(&config, this);
-    if (areanListener->status != AREANSTATUS_ERROR) {
+    arenaListener->Init(&config, this);
+    if (arenaListener->status != ARENASTATUS_ERROR) {
         SendLog("Ready. Listening.");
     }
 }
@@ -46,12 +46,12 @@ void mots::HandleRobotCheckDisallow() {
 }
 
 void mots::InitConnection() {
-    connect(areanListener, SIGNAL(ErrorFindingGameDir()), this, SLOT(HandleGameDirError()));
-    connect(areanListener, SIGNAL(ErrorStartingGame()), this, SLOT(HandleReadingError()));
-    connect(areanListener, SIGNAL(ErrorNetworking()), this, SLOT(HandleNetworkError()));
-    connect(areanListener, SIGNAL(GameStart()), this, SLOT(HandleGameStart()));
-    connect(areanListener, SIGNAL(AllInfoReady()), this, SLOT(HandleAllInfoReady()));
-    connect(areanListener, SIGNAL(GameEnd()), this, SLOT(HandleGameEnd()));
+    connect(arenaListener, SIGNAL(ErrorFindingGameDir()), this, SLOT(HandleGameDirError()));
+    connect(arenaListener, SIGNAL(ErrorStartingGame()), this, SLOT(HandleReadingError()));
+    connect(arenaListener, SIGNAL(ErrorNetworking()), this, SLOT(HandleNetworkError()));
+    connect(arenaListener, SIGNAL(GameStart()), this, SLOT(HandleGameStart()));
+    connect(arenaListener, SIGNAL(AllInfoReady()), this, SLOT(HandleAllInfoReady()));
+    connect(arenaListener, SIGNAL(GameEnd()), this, SLOT(HandleGameEnd()));
     connect(networkInfoUpdateTimer, SIGNAL(timeout()), this, SLOT(HandleUpdateTimer()));
     
 }
@@ -73,14 +73,14 @@ void mots::HandleReadingError() {
 }
 
 void mots::HandleNetworkError() {
-    SendLog("* Network Error: " + areanListener->networkManager->lastError);
+    SendLog("* Network Error: " + arenaListener->networkManager->lastError);
     UpdateAreanData();
-    ui.tabWidget->setCurrentWidget(ui.tabLog);
+    //ui.tabWidget->setCurrentWidget(ui.tabLog);
 }
 
 void mots::HandleGameEnd() {
     SendLog("Game ended. Ready to listen next game.");
-    areanListener->Init(&config, this);
+    arenaListener->Init(&config, this);
 }
 
 void mots::HandleGameStart() {
@@ -91,13 +91,13 @@ void mots::HandleGameStart() {
     else {
         networkInfoUpdateTimer->start(1000);
     }
-    SendLog("Game started. Getting players' scores.");
+    SendLog("Game started. Getting players' scores...");
 }
 
 void mots::HandleAllInfoReady() {
     networkInfoUpdateTimer->stop();
     UpdateAreanData();
-    SendLog("All data loaded. Enjoy your game, " + areanListener->arean.selfPlayerName + " on " + areanListener->arean.selfShipName + ".");
+    SendLog("All data loaded. Enjoy your game, " + arenaListener->arena.selfPlayerName + " on " + arenaListener->arena.selfShipName + ".");
 }
 
 void mots::HandleCreateConfigFile() {
@@ -149,7 +149,7 @@ void mots::ChangeConfig() {
 
     if (configManager->ValidConfig(&c)) {
         config = c;
-        areanListener->Init(&config, this);
+        arenaListener->Init(&config, this);
         if (configManager->WriteConfig()) {
             SendLog("Config saved.");
         }
@@ -171,20 +171,34 @@ void mots::ResetConfig() {
 
 void mots::UpdateAreanData() {
 
-    SendLog("Updating data.");
+    //SendLog("Updating data.");
 
     QString playerStr;
     QStringList ally, enemy;
+
+    QColor colors1[MAXPLAYERCOUNT];
+    QColor colors2[MAXPLAYERCOUNT];
+    for (int i = 0; i < arenaListener->arena.playerCount; i++) {
+        colors1[i] = QColor(0, 0, 0, 0);
+        colors2[i] = QColor(0, 0, 0, 0);
+    }
+
     int self = 0x7FFFFFFF;
-    for (int i = 0; i < areanListener->arean.playerCount; i++) {
+    for (int i = 0; i < arenaListener->arena.playerCount; i++) {
         playerStr = "";
-        if (!areanListener->arean.player[i].basicReady) {
+        if (arenaListener->arena.player[i].onShipScore.pr != 0) {
+            colors2[enemy.count()] = PrUtility::GetColorFromPr(arenaListener->arena.player[i].onShipScore.pr);
+        }
+        if (arenaListener->arena.player[i].onShipScore.pr != 0) {
+            colors1[ally.count()] = PrUtility::GetColorFromPr(arenaListener->arena.player[i].onShipScore.pr);
+        }
+        if (!arenaListener->arena.player[i].basicReady) {
             continue;
         }
-        playerStr += areanListener->arean.player[i].name + "\t";
-        if (!areanListener->arean.player[i].networkInfoReady) {
-            playerStr += "\n------------------------------------------------------------";
-            switch (areanListener->arean.player[i].relation) {
+        playerStr += arenaListener->arena.player[i].name + "\t";
+        if (!arenaListener->arena.player[i].networkInfoReady) {
+            playerStr += "\n----------------------------------------------------------------------";
+            switch (arenaListener->arena.player[i].relation) {
             case RELATION_SELF:
                 self = ally.count();
                 ally << playerStr;
@@ -200,19 +214,22 @@ void mots::UpdateAreanData() {
             }
             continue;
         }
-        playerStr += "[" + areanListener->arean.player[i].shipName + "]\tAvgTier: " + QString::number(areanListener->arean.player[i].averageTier);
+        playerStr += "[" + arenaListener->arena.player[i].shipName + "]\tAvgTier: " + QString::number(arenaListener->arena.player[i].averageTier);
+        if (arenaListener->arena.player[i].onShipScore.pr != 0) {
+            playerStr += "\tPR: " + QString::number(arenaListener->arena.player[i].onShipScore.pr);
+        }
         playerStr += "\n";
-        double overviewWinningRate = (double)areanListener->arean.player[i].overviewScore.winningCount / areanListener->arean.player[i].overviewScore.battleCount * 100;
-        double onShipWinningRate = (double)areanListener->arean.player[i].onShipScore.winningCount / areanListener->arean.player[i].onShipScore.battleCount * 100;
-        playerStr += "ov: " + QString::number(areanListener->arean.player[i].overviewScore.battleCount) + "\t" +
-            QString::number(overviewWinningRate, 'f', 1) + "%\t" + QString::number(areanListener->arean.player[i].overviewScore.averageExp) + "\t" +
-            QString::number(areanListener->arean.player[i].overviewScore.averageDamage);
+        double overviewWinningRate = (double)arenaListener->arena.player[i].overviewScore.winningCount / arenaListener->arena.player[i].overviewScore.battleCount * 100;
+        double onShipWinningRate = (double)arenaListener->arena.player[i].onShipScore.winningCount / arenaListener->arena.player[i].onShipScore.battleCount * 100;
+        playerStr += "ov: " + QString::number(arenaListener->arena.player[i].overviewScore.battleCount) + "\t" +
+            QString::number(overviewWinningRate, 'f', 1) + "%\t" + QString::number(arenaListener->arena.player[i].overviewScore.averageExp) + "\t" +
+            QString::number(arenaListener->arena.player[i].overviewScore.averageDamage) + "\t" + QString::number(arenaListener->arena.player[i].overviewScore.frag, 'f', 2);
         playerStr += "\n";
-        playerStr += "cs: " + QString::number(areanListener->arean.player[i].onShipScore.battleCount) + "\t" +
-            QString::number(onShipWinningRate, 'f', 1) + "%\t" + QString::number(areanListener->arean.player[i].onShipScore.averageExp) + "\t" +
-            QString::number(areanListener->arean.player[i].onShipScore.averageDamage);
-        playerStr += "\n------------------------------------------------------------";
-        switch (areanListener->arean.player[i].relation) {
+        playerStr += "cs: " + QString::number(arenaListener->arena.player[i].onShipScore.battleCount) + "\t" +
+            QString::number(onShipWinningRate, 'f', 1) + "%\t" + QString::number(arenaListener->arena.player[i].onShipScore.averageExp) + "\t" +
+            QString::number(arenaListener->arena.player[i].onShipScore.averageDamage) +"\t" + QString::number(arenaListener->arena.player[i].onShipScore.frag, 'f', 2);
+        playerStr += "\n----------------------------------------------------------------------";
+        switch (arenaListener->arena.player[i].relation) {
         case RELATION_SELF:
             self = ally.count();
             ally << playerStr;
@@ -229,9 +246,19 @@ void mots::UpdateAreanData() {
     }
     ui.listWidgetData1->clear();
     ui.listWidgetData2->clear();
+    
     ui.listWidgetData1->addItems(ally);
     ui.listWidgetData2->addItems(enemy);
+
+    for (int i = 0; i < ally.count(); i++) {
+        ui.listWidgetData1->item(i)->setBackgroundColor(colors1[i]);
+    }
+    for (int i = 0; i < enemy.count(); i++) {
+        ui.listWidgetData2->item(i)->setBackgroundColor(colors2[i]);
+    }
+
     if (self < ui.listWidgetData1->count()) {
         ui.listWidgetData1->setCurrentRow(self);
     }
+    
 }

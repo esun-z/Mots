@@ -3,7 +3,7 @@
 #include <QtWidgets/QWidget>
 #include "ui_mots.h"
 #include "global.h"
-#include "AreanListener.h"
+#include "ArenaListener.h"
 #include "ConfigManager.h"
 #include "RobotCheck.h"
 
@@ -14,7 +14,7 @@ class mots : public QWidget
 public:
     mots(QWidget *parent = Q_NULLPTR);
     MotsConfig config = MotsConfig();
-    AreanListener* areanListener;
+    ArenaListener* arenaListener;
 
 
 private slots:
