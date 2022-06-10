@@ -18,7 +18,7 @@ An in-game players' scores monitor for Wows-CN.
 
 ## 使用
 
-在 [Release](https://github.com/esun-z/Mots/Release) 中下载一个可执行文件，并使用。
+在 [Release](https://github.com/esun-z/Mots/releases) 中下载一个可执行文件，并使用。
 
 阅读玩家数据：
 
