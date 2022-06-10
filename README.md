@@ -18,7 +18,7 @@ An in-game players' scores monitor for Wows-CN.
 
 ## 使用
 
-在 [Release][https://github.com/esun-z/Mots/Release] 中下载一个可执行文件，并使用。
+在 [Release](https://github.com/esun-z/Mots/Release) 中下载一个可执行文件，并使用。
 
 阅读玩家数据：
 
@@ -33,7 +33,7 @@ An in-game players' scores monitor for Wows-CN.
 ## 使用的框架、库与接口
 
 - Qt
-- 来自[@西行寺雨季][https://shinoaki.com/]的 PR 平均值接口
+- 来自[@西行寺雨季](https://shinoaki.com/)的 PR 平均值接口
 
 ## 开发环境
 
@@ -45,4 +45,4 @@ MSVC, Visual Studio 2022 with Qt 5.15.2_msvc2019_64
 
 ## 鸣谢
 
-感谢[@西行寺雨季][https://github.com/JustOneSummer]的指导和支持！
+感谢[@西行寺雨季](https://github.com/JustOneSummer)的指导和支持！
