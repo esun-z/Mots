@@ -68,6 +68,7 @@ void mots::SendLog(QString log) {
 
 void mots::HandleGameDirError() {
     SendLog("* Error: Failed to find game folder. Please check the settings.");
+    QMessageBox::information(this, "Error", "Failed to find game folder. \nPlease check the settings.", QMessageBox::Ok);
     ui.tabWidget->setCurrentWidget(ui.tabConfig);
 }
 
