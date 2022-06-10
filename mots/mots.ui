@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Monkey of the Sea</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="mots.qrc">
+    <normaloff>:/mots/res/icon_easy.ico</normaloff>:/mots/res/icon_easy.ico</iconset>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout_5">
    <item>
     <widget class="QTabWidget" name="tabWidget">

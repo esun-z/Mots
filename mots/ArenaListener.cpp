@@ -78,6 +78,11 @@ bool ArenaListener::GetAreanInfo() {
     arena.playerCount = players.count();
     for (int i = 0; i < arena.playerCount; i++) {
         QJsonObject player = players.at(i).toObject();
+        if (player.value("name").toString().contains(QRegularExpression("IDS_OP_.*_.*_"))) {
+            arena.playerCount--;
+            i--;
+            continue;
+        }
         arena.player[i].shipId = player.value("shipId").toDouble(-1);
         arena.player[i].name = ConvertUnicodeString(player.value("name").toString());
         arena.player[i].relation = player.value("relation").toInt(-1);

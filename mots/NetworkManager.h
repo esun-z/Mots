@@ -42,6 +42,7 @@ public:
 			}
 			request = QNetworkRequest();
 			request.setUrl(url);
+			request.setHeader(QNetworkRequest::UserAgentHeader, "QNetworkAccessManager");
 			if (isXml) {
 				request.setRawHeader("X-Requested-With", "XMLHttpRequest");
 			}
@@ -81,6 +82,9 @@ private slots:
 	void HandleIdReply();
 	void HandleOvReply();
 	void HandleShipReply();
+	void HandleIdNetworkError(QNetworkReply::NetworkError e);
+	void HandleOverviewNetworkError(QNetworkReply::NetworkError e);
+	void HandleShipNetworkError(QNetworkReply::NetworkError e);
 
 	void HandlePrReady();
 	void HandlePrError();

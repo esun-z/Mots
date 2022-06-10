@@ -18,6 +18,7 @@
 #include <QJsonValue>
 #include <QRegularExpression>
 #include <QColor>
+#include <QMessageBox>
 #include <iostream>
 #include <map>
 #include <algorithm>
@@ -76,6 +77,7 @@ struct PlayerData {
 	//bool shipNameReady;
 	bool networkInfoReady;
 	bool networkError;
+	bool noShipData;
 	int searchProcess;
 	PlayerScore overviewScore;
 	PlayerScore onShipScore;
@@ -94,6 +96,7 @@ struct PlayerData {
 		onShipScore = PlayerScore();
 		averageTier = 0;
 		networkError = false;
+		noShipData = false;
 	}
 };
 
@@ -126,9 +129,9 @@ struct MotsConfig {
 		networkInterval = 500;
 		localInterval = 1000;
 		gamePath = "C:/Games/World_of_Warships_CN360/";
-		getIdUrl = QString::fromStdString("https://wowsgame.cn/community/accounts/search/?search=") + PLACEHOLDER_PLAYERNAME + "&pjax=1";
-		getOverviewUrl = QString::fromStdString("https://wowsgame.cn/community/accounts/tab/pvp/overview/") + PLACEHOLDER_PLAYERID;
-		getShipUrl = QString::fromStdString("https://wowsgame.cn/community/accounts/tab/pvp/ships/") + PLACEHOLDER_PLAYERID;
+		getIdUrl = QString::fromStdString("https://wowsgame.cn/zh-cn/community/accounts/search/?search=") + PLACEHOLDER_PLAYERNAME + "&pjax=1";
+		getOverviewUrl = QString::fromStdString("https://wowsgame.cn/zh-cn/community/accounts/tab/pvp/overview/") + PLACEHOLDER_PLAYERID;
+		getShipUrl = QString::fromStdString("https://wowsgame.cn/zh-cn/community/accounts/tab/pvp/ships/") + PLACEHOLDER_PLAYERID;
 		getShipNameUrl = QString::fromStdString("https://api.worldofwarships.asia/wows/encyclopedia/ships/?application_id=") + PLACEHOLDER_APPLICATIONID + "&fields=name&language=zh-cn&ship_id=" + PLACEHOLDER_SHIPID;
 		applicationId = APPLICATIONID;
 		customApplicationId = false;

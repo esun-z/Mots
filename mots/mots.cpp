@@ -9,6 +9,7 @@ mots::mots(QWidget *parent)
 
     networkInfoUpdateTimer = new QTimer(this);
     
+    //Init config
     configManager = new ConfigManager(&config, this);
     connect(configManager, SIGNAL(CreateConfigFile()), this, SLOT(HandleCreateConfigFile()));
     connect(ui.pushButtonCancelChange, SIGNAL(clicked()), this, SLOT(UpdateConfig()));
@@ -19,6 +20,7 @@ mots::mots(QWidget *parent)
     CheckBot();
 }
 
+//Check bot permission
 void mots::CheckBot() {
     SendLog("Checking robot permission.");
     rc = new RobotCheck(ROBOTCHECKURL, this);
@@ -30,6 +32,8 @@ void mots::CheckBot() {
 void mots::HandleRobotCheckAllow() {
     SendLog("Robot permission confirmed.");
     arenaListener = new ArenaListener(&config, this);
+
+    //Init arena listener
     InitConnection();
     arenaListener->Init(&config, this);
     if (arenaListener->status != ARENASTATUS_ERROR) {
@@ -53,9 +57,9 @@ void mots::InitConnection() {
     connect(arenaListener, SIGNAL(AllInfoReady()), this, SLOT(HandleAllInfoReady()));
     connect(arenaListener, SIGNAL(GameEnd()), this, SLOT(HandleGameEnd()));
     connect(networkInfoUpdateTimer, SIGNAL(timeout()), this, SLOT(HandleUpdateTimer()));
-    
 }
 
+//send log to ui
 void mots::SendLog(QString log) {
     ui.labelLog->setText(log);
     ui.listWidgetLog->addItem(log);
@@ -176,6 +180,7 @@ void mots::UpdateAreanData() {
     QString playerStr;
     QStringList ally, enemy;
 
+    //set color to transparence
     QColor colors1[MAXPLAYERCOUNT];
     QColor colors2[MAXPLAYERCOUNT];
     for (int i = 0; i < arenaListener->arena.playerCount; i++) {
@@ -187,11 +192,16 @@ void mots::UpdateAreanData() {
     for (int i = 0; i < arenaListener->arena.playerCount; i++) {
         playerStr = "";
         if (arenaListener->arena.player[i].onShipScore.pr != 0) {
-            colors2[enemy.count()] = PrUtility::GetColorFromPr(arenaListener->arena.player[i].onShipScore.pr);
+            if (arenaListener->arena.player[i].relation == RELATION_ENEMY) {
+                colors2[enemy.count()] = PrUtility::GetColorFromPr(arenaListener->arena.player[i].onShipScore.pr);
+            }
+            else {
+                colors1[ally.count()] = PrUtility::GetColorFromPr(arenaListener->arena.player[i].onShipScore.pr);
+            }
         }
-        if (arenaListener->arena.player[i].onShipScore.pr != 0) {
+        /*if (arenaListener->arena.player[i].onShipScore.pr != 0) {
             colors1[ally.count()] = PrUtility::GetColorFromPr(arenaListener->arena.player[i].onShipScore.pr);
-        }
+        }*/
         if (!arenaListener->arena.player[i].basicReady) {
             continue;
         }
@@ -214,8 +224,14 @@ void mots::UpdateAreanData() {
             }
             continue;
         }
-        playerStr += "[" + arenaListener->arena.player[i].shipName + "]\tAvgTier: " + QString::number(arenaListener->arena.player[i].averageTier);
-        if (arenaListener->arena.player[i].onShipScore.pr != 0) {
+
+        if (!arenaListener->arena.player[i].shipName.isEmpty()) {
+            playerStr += "[" + arenaListener->arena.player[i].shipName + "]";
+        }
+        if (arenaListener->arena.player[i].averageTier > 0) {
+            playerStr += "\tAvgTier: " + QString::number(arenaListener->arena.player[i].averageTier);
+        }
+        if (arenaListener->arena.player[i].onShipScore.pr > 0) {
             playerStr += "\tPR: " + QString::number(arenaListener->arena.player[i].onShipScore.pr);
         }
         playerStr += "\n";
@@ -225,9 +241,11 @@ void mots::UpdateAreanData() {
             QString::number(overviewWinningRate, 'f', 1) + "%\t" + QString::number(arenaListener->arena.player[i].overviewScore.averageExp) + "\t" +
             QString::number(arenaListener->arena.player[i].overviewScore.averageDamage) + "\t" + QString::number(arenaListener->arena.player[i].overviewScore.frag, 'f', 2);
         playerStr += "\n";
-        playerStr += "cs: " + QString::number(arenaListener->arena.player[i].onShipScore.battleCount) + "\t" +
-            QString::number(onShipWinningRate, 'f', 1) + "%\t" + QString::number(arenaListener->arena.player[i].onShipScore.averageExp) + "\t" +
-            QString::number(arenaListener->arena.player[i].onShipScore.averageDamage) +"\t" + QString::number(arenaListener->arena.player[i].onShipScore.frag, 'f', 2);
+        if (!arenaListener->arena.player[i].noShipData) {
+            playerStr += "cs: " + QString::number(arenaListener->arena.player[i].onShipScore.battleCount) + "\t" +
+                QString::number(onShipWinningRate, 'f', 1) + "%\t" + QString::number(arenaListener->arena.player[i].onShipScore.averageExp) + "\t" +
+                QString::number(arenaListener->arena.player[i].onShipScore.averageDamage) + "\t" + QString::number(arenaListener->arena.player[i].onShipScore.frag, 'f', 2);
+        }
         playerStr += "\n----------------------------------------------------------------------";
         switch (arenaListener->arena.player[i].relation) {
         case RELATION_SELF:
@@ -246,7 +264,7 @@ void mots::UpdateAreanData() {
     }
     ui.listWidgetData1->clear();
     ui.listWidgetData2->clear();
-    
+
     ui.listWidgetData1->addItems(ally);
     ui.listWidgetData2->addItems(enemy);
 
@@ -260,5 +278,4 @@ void mots::UpdateAreanData() {
     if (self < ui.listWidgetData1->count()) {
         ui.listWidgetData1->setCurrentRow(self);
     }
-    
 }

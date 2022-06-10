@@ -177,6 +177,11 @@ void PrUtility::HandleNetworkReply() {
 }
 
 int PrUtility::CalcPr(long long shipId, double winRate, double avgDmg, double avgFrag) {
+
+	if (prList.count(shipId) == 0) {
+		return 0;
+	}
+
 	double eWinRate = prList.at(shipId).avgWinRate;
 	double eDmg = prList.at(shipId).avgDmg;
 	double eFrag = prList.at(shipId).avgFrag;

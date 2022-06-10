@@ -1,0 +1,13 @@
+
+.vs/
+*.db
+*.bin
+*.ipch
+*.filters
+*.user
+*.obj
+*.log
+*.recipe
+*.tlog
+*.dll
+x64/

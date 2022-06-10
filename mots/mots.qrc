@@ -1,4 +1,5 @@
 <RCC>
-    <qresource prefix="mots">
+    <qresource prefix="/mots">
+        <file>res/icon_easy.ico</file>
     </qresource>
 </RCC>
